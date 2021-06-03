@@ -16,8 +16,9 @@ Network architecture detail: [LINK](https://web.eecs.umich.edu/~justincj/papers/
 
 ## **Image Stylization**
 ---
-<img src ="https://raw.githubusercontent.com/wilile26811249/Style_Transfer_PyTorch/main/images/input_images/vivy.jpg" width="420px" border="1" style="display:block; margin:auto;">
-<div style="text-align:center">Original Image</div>
+<p align=center> <img src ="https://raw.githubusercontent.com/wilile26811249/Style_Transfer_PyTorch/main/images/input_images/vivy.jpg" width="420px" border="1"> </p>
+<p align=center><b>Original Image</b></p>
+
 <table style="width:100%, border:3px">
   <tr>
     <th style="text-align:center">Style Image</th>
