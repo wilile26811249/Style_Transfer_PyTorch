@@ -13,6 +13,9 @@ import utils
 import vgg16
 import transform_net
 
+os.makedirs('./weights', exist_ok = True)
+os.makedirs('./style_weight', exist_ok = True)
+
 parser = argparse.ArgumentParser(description = 'Style Transfer Project')
 parser.add_argument('--epochs', type = int, default = 1,
                     help = 'Number of the training epochs')
@@ -40,6 +43,8 @@ parser.add_argument('--seed', type = int, default = 1,
                     help = 'Set the random seed (default: 1)')
 parser.add_argument('--gpu-id', type = str, default = "0",
                     help = 'Select the sepcific GPU card (default: 0)')
+parser.add_argument('--style-model-path', type = str, default = "style_transform",
+                    help = 'Specific the final file name of the model weight (default: style_transform)')
 
 def fix_seed(SEED):
     torch.manual_seed(SEED)
@@ -117,30 +122,47 @@ def train(args, device, VGG, TransformerNet, train_loader):
             total_loss.backward()
             optimizer.step()
 
-            if ((train_steps + 1) % args.save_interval == 0):
+            if (train_steps + 1) % args.save_interval == 0:
                 # Print Losses
-                print("========Iteration {}/{}========".format(train_steps, args.epochs * len(train_loader)))
-                print("\tContent Loss:\t{:.2f}".format(batch_content_loss_sum / train_steps))
-                print("\tStyle Loss:\t{:.2f}".format(batch_style_loss_sum / train_steps))
-                print("\tTotal Loss:\t{:.2f}".format(batch_total_loss_sum / train_steps))
-                print("Time elapsed:\t{} seconds".format(time.time()-start_time))
+                print(f"========Iteration {train_steps}/{args.epochs * len(train_loader)}========")
+                print(f"\tContent Loss:\t{batch_content_loss_sum / train_steps:.2f}")
+                print(f"\tStyle Loss:\t{batch_style_loss_sum / train_steps:.2f}")
+                print(f"\tTotal Loss:\t{batch_total_loss_sum / train_steps:.2f}")
+                print(f"Time elapsed:\t{time.time() - start_time} seconds")
 
                 # Save Model
                 checkpoint_path = args.save_model_path + "checkpoint_" + str(train_steps) + ".pth"
                 torch.save(TransformerNet.state_dict(), checkpoint_path)
-                print("Saved TransformerNetwork checkpoint file at {}".format(checkpoint_path))
+                print(f"Saved TransformerNetwork checkpoint file at {checkpoint_path}")
 
                 # Save sample generated image
                 sample_tensor = generated_batch[0].clone().detach().unsqueeze(dim=0)
                 sample_image = utils.tensor2img(sample_tensor.clone().detach())
                 sample_image_path = args.save_img_path + "sample_" + str(train_steps) + ".jpg"
                 utils.saveimg(sample_image, sample_image_path)
-                print("Saved sample tranformed image at {}".format(sample_image_path))
+                print(f"Saved sample tranformed image at {sample_image_path}")
 
                 # Save loss histories
-                content_loss_history.append(batch_total_loss_sum/train_steps)
-                style_loss_history.append(batch_style_loss_sum/train_steps)
-                total_loss_history.append(batch_total_loss_sum/train_steps)
+                content_loss_history.append(batch_total_loss_sum / train_steps)
+                style_loss_history.append(batch_style_loss_sum / train_steps)
+                total_loss_history.append(batch_total_loss_sum / train_steps)
+    stop_time = time.time()
+    print("Done Training the Transformer Network!")
+    print(f"Training Time Costs: {stop_time - start_time} seconds")
+    print("========Content Loss========")
+    print(content_loss_history)
+    print("========Style Loss========")
+    print(style_loss_history)
+    print("========Total Loss========")
+    print(total_loss_history)
+
+    # Save TransformerNetwork weights
+    TransformerNet.eval()
+    TransformerNet.cpu()
+    final_path = os.path.join("./style_weights", args.style_model_path + ".pth")
+    print(f"Saving TransformerNetwork weights at {final_path}")
+    torch.save(TransformerNet.state_dict(), final_path)
+    print("Done saving final model")
 
 def main():
     args = parser.parse_args()
