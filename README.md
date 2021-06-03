@@ -1,4 +1,4 @@
-# Style_Transfer_PyTorch
+# Fast Neural Style Transfer implement by PyTorch!
 
 This repository is implement the fast-neural-style-tranfer.
 
@@ -8,13 +8,13 @@ Paper:
 [Perceptual Losses for Real-Time Style Transfer and Super-Resolution](https://arxiv.org/abs/1603.08155)<p>
 Network architecture detail: [LINK](https://web.eecs.umich.edu/~justincj/papers/eccv16/JohnsonECCV16Supplementary.pdf)
 
-<img src ="https://media.springernature.com/original/springer-static/image/chp%3A10.1007%2F978-3-319-46475-6_43/MediaObjects/419974_1_En_43_Fig2_HTML.gif" width="420px" border="1" style="display:block; margin:auto;">
-<div style="text-align:center"><strong>Network Overview</strong></div>
+<p align=center> <img src ="https://media.springernature.com/original/springer-static/image/chp%3A10.1007%2F978-3-319-46475-6_43/MediaObjects/419974_1_En_43_Fig2_HTML.gif" width="420px" border="1"> </p>
+<p align=center><b>Network Overview</b></p>
 
 <p>
 
 
-## **Image Stylization**
+## **Image Stylization Result**
 ---
 <p align=center> <img src ="https://raw.githubusercontent.com/wilile26811249/Style_Transfer_PyTorch/main/images/input_images/vivy.jpg" width="420px" border="1"> </p>
 <p align=center><b>Original Image</b></p>
@@ -72,3 +72,58 @@ Network architecture detail: [LINK](https://web.eecs.umich.edu/~justincj/papers/
 </table>
 
 ---
+
+# **Usage**
+
+## Training the Style-Transfer Network
+
+```train.py```: Train the Transform Network that learn the style from the ```style_image``` and retain the semantic-information about the ```input_image```.
+```bash
+python neural_style/train.py --content-dir ./images/content_images --style-img-path ./images/style_images/mosaic.jpg --epochs 1 --batch-size 4
+```
+**Optionals**
+```
+usage: train_success.py [-h] [--epochs EPOCHS] [--lr LR]
+                        [--batch-size BATCH_SIZE] [--img-size IMG_SIZE]
+                        [--content-weight CONTENT_WEIGHT]
+                        [--style-weight STYLE_WEIGHT]
+                        [--save-interval SAVE_INTERVAL]
+                        [--content-dir CONTENT_DIR]
+                        [--style-img-path STYLE_IMG_PATH]
+                        [--save-img-path SAVE_IMG_PATH]
+                        [--save-model-path SAVE_MODEL_PATH] [--seed SEED]
+                        [--gpu-id GPU_ID]
+                        [--style-model-path STYLE_MODEL_PATH]
+
+Style Transfer Project
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --epochs EPOCHS       Number of the training epochs
+  --lr LR               Learning rate (default: 0.001)
+  --batch-size BATCH_SIZE
+                        Batch size of trainign and evaluation
+  --img-size IMG_SIZE   Training image size
+  --content-weight CONTENT_WEIGHT
+                        Content weight for the final loss
+  --style-weight STYLE_WEIGHT
+                        Style weight for the final loss
+  --save-interval SAVE_INTERVAL
+                        Save model when every update save-interval times
+  --content-dir CONTENT_DIR
+                        Path for the content image root (default:
+                        ./images/content_images
+  --style-img-path STYLE_IMG_PATH
+                        Path for the style image path (default:
+                        ./images/style_images/starry-night-cropped.jpg
+  --save-img-path SAVE_IMG_PATH
+                        Path for the content image root (default:
+                        ./images/result_images
+  --save-model-path SAVE_MODEL_PATH
+                        Path for the model weight (default: ../weights)
+  --seed SEED           Set the random seed (default: 1)
+  --gpu-id GPU_ID       Select the sepcific GPU card (default: 0)
+  --style-model-path STYLE_MODEL_PATH
+                        Specific the final file name of the model weight
+                        (default: style_transform)
+```
