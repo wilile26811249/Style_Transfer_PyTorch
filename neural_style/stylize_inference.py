@@ -14,7 +14,7 @@ import transform_net
 # Check the style weight path
 style_filepath = {}
 style_name_list = []
-weight_path = glob.glob("../style_weight/*.pth")
+weight_path = glob.glob("./style_weight/*.pth")
 number_of_style = len(weight_path)
 for path in weight_path:
     weight_name = path.split("/")[-1]
@@ -59,6 +59,7 @@ with torch.no_grad():
             content_tensor = utils.img2tensor(content_image).to(device)
             generated_tensor = net(content_tensor)
             generated_image = utils.tensor2img(generated_tensor.detach())
+            print("Transfer Time: {}".format(time.time() - starttime))
             utils.show(generated_image)
         else:
             print(f"Please input (Input 1 ~ {number_of_style + 1}) to select style!")
