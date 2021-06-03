@@ -1,6 +1,6 @@
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
+from torchvision import models, transforms
 
 def conv3x3(in_dim, out_dim, stride = 1, padding = 1):
     return nn.Conv2d(in_dim, out_dim, 3, stride, padding)
@@ -12,54 +12,27 @@ class vgg16(nn.Module):
     Github page:
         https://github.com/jcjohnson/pytorch-vgg
     """
-    def __init__(self):
-        super().__init__()
-        self.conv1_1= conv3x3(3, 64)
-        self.conv1_2 = conv3x3(64, 64)
-
-        self.conv2_1 = conv3x3(64, 128)
-        self.conv2_2 = conv3x3(128, 128)
-
-        self.conv3_1 = conv3x3(128, 256)
-        self.conv3_2 = conv3x3(256, 256)
-        self.conv3_3 = conv3x3(256, 256)
-
-        self.conv4_1 = conv3x3(256, 512)
-        self.conv4_2 = conv3x3(512, 512)
-        self.conv4_3 = conv3x3(512, 512)
-
-        self.conv5_1 = conv3x3(512, 512)
-        self.conv5_2 = conv3x3(512, 512)
-        self.conv5_3 = conv3x3(512, 512)
+    def __init__(self, weight_path = './weights/vgg16.pth'):
+        super(vgg16, self).__init__()
+        loss_network = models.vgg16(pretrained = False)
+        loss_network.load_state_dict(torch.load(weight_path), strict = False)
+        self.features = loss_network.features
 
     def forward(self, x):
-        x = F.relu(self.conv1_1(x))
-        x = F.relu(self.conv1_2(x))
-        relu1_2 = x
-        x = F.max_pool2d(x, kernel_size =2, stride = 2)
-
-        x = F.relu(self.conv2_1(x))
-        x = F.relu(self.conv2_2(x))
-        relu2_2 = x
-        x = F.max_pool2d(x, kernel_size =2, stride = 2)
-
-        x = F.relu(self.conv3_1(x))
-        x = F.relu(self.conv3_2(x))
-        x = F.relu(self.conv3_3(x))
-        relu3_3 = x
-        x = F.max_pool2d(x, kernel_size =2, stride = 2)
-
-        x = F.relu(self.conv4_1(x))
-        x = F.relu(self.conv4_2(x))
-        x = F.relu(self.conv4_3(x))
-        relu4_3 = x
-
-        features = {}
-        features["relu1_2"] = relu1_2
-        features["relu2_2"] = relu2_2
-        features["relu3_3"] = relu3_3
-        features["relu4_3"] = relu4_3
-        return features
+        feature_extract = {
+            '3' : 'relu1_2',
+            '8' : 'relu2_2',
+            '15' : 'relu3_3',
+            '22' : 'relu4_3'
+        }
+        return_features = {}
+        for name, layer in self.features._modules.items():
+            x = layer(x)
+            if name in feature_extract:
+                return_features[feature_extract[name]] = x
+                if name == '22':
+                    break
+        return return_features
 
 
 def vgg16_pretrained(weight_path = './weights/vgg16.pth'):
@@ -78,3 +51,5 @@ def test():
 
     for key, value in style.items():
         print(f"{key}: {value.shape}")
+
+test()
