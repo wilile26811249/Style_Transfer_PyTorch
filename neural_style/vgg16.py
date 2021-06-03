@@ -2,9 +2,6 @@ import torch
 import torch.nn as nn
 from torchvision import models, transforms
 
-def conv3x3(in_dim, out_dim, stride = 1, padding = 1):
-    return nn.Conv2d(in_dim, out_dim, 3, stride, padding)
-
 class vgg16(nn.Module):
     """
     Pretrained weight download (Provide by Justin Johnson):
@@ -36,8 +33,7 @@ class vgg16(nn.Module):
 
 
 def vgg16_pretrained(weight_path = './weights/vgg16.pth'):
-    model = vgg16()
-    model.load_state_dict(torch.load(weight_path), strict=False)
+    model = vgg16(weight_path)
 
     # Fixed the pretrained loss network in order to define our loss functions
     for param in model.parameters():
@@ -51,5 +47,3 @@ def test():
 
     for key, value in style.items():
         print(f"{key}: {value.shape}")
-
-test()
