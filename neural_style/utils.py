@@ -4,50 +4,36 @@ import matplotlib.pyplot as plt
 import torch
 from torchvision import transforms, datasets
 
-# Gram Matrix
 def gram(tensor):
+    """
+    Why the style transfer use gram matrix?
+    Explained: https://www.zhihu.com/question/49805962
+    """
     B, C, H, W = tensor.shape
     x = tensor.view(B, C, H * W)
     x_t = x.transpose(1, 2)
     return  torch.bmm(x, x_t) / (C * H * W)
 
-# Load image file
 def load_image(path):
-    # Images loaded as BGR
-    img = cv2.imread(path)
+    img = cv2.imread(path)  # BGR
     return img
 
 def saveimg(img, image_path):
     img = img.clip(0, 255)
     cv2.imwrite(image_path, img)
 
-# Convert Image to Tensor
-def img2tensor(img, max_size = None):
-    # Rescale the image
-    if max_size == None:
-        transform = transforms.Compose([
-            transforms.ToPILImage(),
-            transforms.ToTensor(),
-            transforms.Lambda(lambda x: x.mul(255))
-        ])
-    else:
-        H, W, C = img.shape
-        image_size = tuple([int((float(max_size) / max([H, W])) * x) for x in [H, W]])
-        transform = transforms.Compose([
-            transforms.ToPILImage(),
-            transforms.Resize(image_size),
-            transforms.ToTensor(),
-            transforms.Lambda(lambda x: x.mul(255))
-        ])
-
-    # Convert image to tensor
+def img2tensor(img):
+    transform = transforms.Compose([
+        transforms.ToPILImage(),
+        transforms.ToTensor(),
+        transforms.Lambda(lambda x: x.mul(255))
+    ])
     tensor = transform(img)
 
-    # Add the batch_size dimension
-    tensor = tensor.unsqueeze(dim=0)
+    # Unsqueeze for the batch_size dimension
+    tensor = tensor.unsqueeze(dim = 0)
     return tensor
 
-# Convert Tensor to Image
 def tensor2img(tensor):
     # Remove the batch_size dimension
     tensor = tensor.squeeze()
@@ -56,22 +42,6 @@ def tensor2img(tensor):
     # Transpose from [C, H, W] -> [H, W, C]
     img = img.transpose(1, 2, 0)
     return img
-
-def transfer_color(src, dest):
-    """
-    Transfer Color using YIQ colorspace. Useful in preserving colors in style transfer.
-    This method assumes inputs of shape [Height, Width, Channel] in BGR Color Space
-    """
-    src, dest = src.clip(0, 255), dest.clip(0, 255)
-
-    # Resize src to dest's size
-    H, W, _ = src.shape
-    dest = cv2.resize(dest, dsize =  (W, H), interpolation = cv2.INTER_CUBIC)
-
-    dest_gray = cv2.cvtColor(dest, cv2.COLOR_BGR2GRAY) #1 Extract the Destination's luminance
-    src_yiq = cv2.cvtColor(src, cv2.COLOR_BGR2YCrCb)   #2 Convert the Source from BGR to YIQ/YCbCr
-    src_yiq[...,0] = dest_gray                         #3 Combine Destination's luminance and Source's IQ/CbCr
-    return cv2.cvtColor(src_yiq, cv2.COLOR_YCrCb2BGR).clip(0, 255)  #4 Convert new image from YIQ back to BGR
 
 def save_loss_hist(c_loss, s_loss, total_loss, path, title = "Loss History"):
     x = [i for i in range(len(total_loss))]
@@ -85,6 +55,7 @@ def save_loss_hist(c_loss, s_loss, total_loss, path, title = "Loss History"):
     plt.ylabel('Loss')
     plt.title(title)
     plt.savefig(path)
+
 
 class ImageFolderWithPaths(datasets.ImageFolder):
     """
