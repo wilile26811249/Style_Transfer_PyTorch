@@ -14,7 +14,7 @@ import transform_net
 # Check the style weight path
 style_filepath = {}
 style_name_list = []
-weight_path = glob.glob("./style_weight/*.pth")
+weight_path = glob.glob("../style_weight/*.pth")
 number_of_style = len(weight_path)
 for path in weight_path:
     weight_name = path.split("/")[-1]
