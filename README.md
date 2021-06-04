@@ -11,6 +11,7 @@ This repository contains a ```PyTorch``` implementation of an algorithm for fast
 * [Usage](#usage)
 	- [Training the Style-Transfer Network](#training-the-style-transfer-network)
 	- [Neural Style Transfer](#neural-style-transfer)
+* [TODOs](#todos)
 * [Reference](#reference)
 * [Acknowledgement](#acknowledgement)
 
@@ -165,6 +166,12 @@ python neural_style/stylize_inference.py
 
 ---
 
+# TODOs
+- [x] Video Style Transfer
+- [x] Webcam
+
+---
+
 ## Reference
 1. **J. Johnson, A. Alahi, and L. Fei-Fei. Perceptual losses for
 real-time style transfer and super-resolution. ECCV 2016**
@@ -173,6 +180,5 @@ real-time style transfer and super-resolution. ECCV 2016**
 ---
 
 ## Acknowledgement
-
 The code benefits from outstanding prior work and their implementations including:
 - [Perceptual losses for real-time style transfer and super-resolution](https://arxiv.org/pdf/1603.08155.pdf) by Johnson *et al. 2016* and its torch implementation [code](https://github.com/jcjohnson/neural-style) by Johnson.
