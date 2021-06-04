@@ -35,68 +35,61 @@ class TransformNet(nn.Module):
 
 
 class ConvLayer(nn.Module):
-    def __init__(self, in_channels, out_channels, kernel_size, stride, norm="instance"):
+    def __init__(self, in_dim, out_dim, kernel_size, stride, norm = "instance"):
         super(ConvLayer, self).__init__()
-        # Padding Layers
         padding_size = kernel_size // 2
         self.reflection_pad = nn.ReflectionPad2d(padding_size)
 
-        # Convolution Layer
-        self.conv_layer = nn.Conv2d(in_channels, out_channels, kernel_size, stride)
+        self.conv_layer = nn.Conv2d(in_dim, out_dim, kernel_size, stride)
 
         # Normalization Layers
         self.norm_type = norm
-        if (norm == "instance"):
-            self.norm_layer = nn.InstanceNorm2d(out_channels, affine = True)
-        elif (norm == "batch"):
-            self.norm_layer = nn.BatchNorm2d(out_channels, affine = True)
+        if norm == "instance":
+            self.norm_layer = nn.InstanceNorm2d(out_dim, affine = True)
+        elif norm == "batch":
+            self.norm_layer = nn.BatchNorm2d(out_dim, affine = True)
 
     def forward(self, x):
         x = self.reflection_pad(x)
         x = self.conv_layer(x)
-        if (self.norm_type == "None"):
+        if self.norm_type == "None":
             out = x
         else:
             out = self.norm_layer(x)
         return out
 
 class ResidualLayer(nn.Module):
-    """
-    Deep Residual Learning for Image Recognition
-
-    https://arxiv.org/abs/1512.03385
-    """
-    def __init__(self, channels=128, kernel_size=3):
+    def __init__(self, channels = 128, kernel_size = 3):
         super(ResidualLayer, self).__init__()
-        self.conv1 = ConvLayer(channels, channels, kernel_size, stride=1)
+        self.conv1 = ConvLayer(channels, channels, kernel_size, stride = 1)
         self.relu = nn.ReLU()
-        self.conv2 = ConvLayer(channels, channels, kernel_size, stride=1)
+        self.conv2 = ConvLayer(channels, channels, kernel_size, stride = 1)
 
     def forward(self, x):
-        identity = x                     # preserve residual
-        out = self.relu(self.conv1(x))   # 1st conv layer + activation
-        out = self.conv2(out)            # 2nd conv layer
-        out = out + identity             # add residual
+        identity = x
+        out = self.relu(self.conv1(x))
+        out = self.conv2(out)
+        out = out + identity
         return out
 
 class DeconvLayer(nn.Module):
-    def __init__(self, in_channels, out_channels, kernel_size, stride, output_padding, norm="instance"):
+    def __init__(self, in_dim, out_dim, kernel_size, stride, output_padding, norm="instance"):
         super(DeconvLayer, self).__init__()
 
         # Transposed Convolution
         padding_size = kernel_size // 2
-        self.conv_transpose = nn.ConvTranspose2d(in_channels, out_channels, kernel_size, stride, padding_size, output_padding)
+        self.conv_transpose = nn.ConvTranspose2d(in_dim, out_dim, kernel_size, stride, padding_size, output_padding)
 
         # Normalization Layers
         self.norm_type = norm
         if (norm == "instance"):
-            self.norm_layer = nn.InstanceNorm2d(out_channels, affine = True)
+            self.norm_layer = nn.InstanceNorm2d(out_dim, affine = True)
         elif (norm == "batch"):
-            self.norm_layer = nn.BatchNorm2d(out_channels, affine = True)
+            self.norm_layer = nn.BatchNorm2d(out_dim, affine = True)
 
     def forward(self, x):
         x = self.conv_transpose(x)
-        if (self.norm_type == "None"):
+        if self.norm_type == "None":
             out = x
         else:
             out = self.norm_layer(x)

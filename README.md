@@ -16,7 +16,7 @@ Network architecture detail: [LINK](https://web.eecs.umich.edu/~justincj/papers/
 
 ## **Image Stylization Result**
 ---
-<p align=center> <img src ="https://raw.githubusercontent.com/wilile26811249/Style_Transfer_PyTorch/main/images/input_images/vivy.jpg" width="420px" border="1"> </p>
+<p align=center> <img src ="https://raw.githubusercontent.com/wilile26811249/Style_Transfer_PyTorch/main/images/input_images/sunset.jpg" width="420px" border="1"> </p>
 <p align=center><b>Original Image</b></p>
 
 <table style="width:100%, border:3px">
@@ -30,7 +30,7 @@ Network architecture detail: [LINK](https://web.eecs.umich.edu/~justincj/papers/
         height="210px"  border="1">
     </td>
     <td>
-        <img src ="https://raw.githubusercontent.com/wilile26811249/Style_Transfer_PyTorch/main/images/result_images/vivy_candy.jpg"   border="1">
+        <img src ="https://raw.githubusercontent.com/wilile26811249/Style_Transfer_PyTorch/main/images/result_images/sunset_candy.jpg"   border="1">
     </td>
   </tr>
   <tr>
@@ -39,7 +39,7 @@ Network architecture detail: [LINK](https://web.eecs.umich.edu/~justincj/papers/
         height="210px"  border="1">
     </td>
     <td>
-        <img src ="https://raw.githubusercontent.com/wilile26811249/Style_Transfer_PyTorch/main/images/result_images/vivy_mosaic.jpg"   border="1">
+        <img src ="https://raw.githubusercontent.com/wilile26811249/Style_Transfer_PyTorch/main/images/result_images/sunset_mosaic.jpg"   border="1">
     </td>
   </tr>
   <tr>
@@ -48,7 +48,7 @@ Network architecture detail: [LINK](https://web.eecs.umich.edu/~justincj/papers/
         height="210px"  border="1">
     </td>
     <td>
-        <img src ="https://raw.githubusercontent.com/wilile26811249/Style_Transfer_PyTorch/main/images/result_images/vivy_starry_night.jpg"   border="1">
+        <img src ="https://raw.githubusercontent.com/wilile26811249/Style_Transfer_PyTorch/main/images/result_images/sunset_starry_night.jpg"   border="1">
     </td>
   </tr>
   <tr>
@@ -57,7 +57,7 @@ Network architecture detail: [LINK](https://web.eecs.umich.edu/~justincj/papers/
         height="210px"  border="1">
     </td>
     <td>
-        <img src ="https://raw.githubusercontent.com/wilile26811249/Style_Transfer_PyTorch/main/images/result_images/vivy_great_wave.jpg"   border="1">
+        <img src ="https://raw.githubusercontent.com/wilile26811249/Style_Transfer_PyTorch/main/images/result_images/sunset_great_wave.jpg"   border="1">
     </td>
   </tr>
   <tr>
@@ -66,7 +66,7 @@ Network architecture detail: [LINK](https://web.eecs.umich.edu/~justincj/papers/
         height="210px"  border="1">
     </td>
     <td>
-        <img src ="https://raw.githubusercontent.com/wilile26811249/Style_Transfer_PyTorch/main/images/result_images/vivy_guernica.jpg"   border="1">
+        <img src ="https://raw.githubusercontent.com/wilile26811249/Style_Transfer_PyTorch/main/images/result_images/sunset_guernica.jpg"   border="1">
     </td>
   </tr>
 </table>
