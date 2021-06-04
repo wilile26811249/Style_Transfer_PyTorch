@@ -167,8 +167,8 @@ python neural_style/stylize_inference.py
 ---
 
 # TODOs
-- [x] Video Style Transfer
-- [x] Webcam
+- [ ] Video Style Transfer
+- [ ] Webcam
 
 ---
 
