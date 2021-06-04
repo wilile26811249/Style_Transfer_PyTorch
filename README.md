@@ -1,20 +1,31 @@
 # Fast Neural Style Transfer implement by PyTorch!
+**Author: Willie Chen**
 
-This repository is implement the fast-neural-style-tranfer.
+This repository contains a ```PyTorch``` implementation of an algorithm for fast style transfer. The algorithm can be used to mix the content of the input image with the style of the style image.
 
+---
 
-Paper:
+## Table of Contents
+* [Network structure overview](#network-structure-overview)
+* [Image Stylization Result](#image-stylization-result)
+* [Usage](#usage)
+	- [Training the Style-Transfer Network](#training-the-style-transfer-network)
+	- [Neural Style Transfer](#neural-style-transfer)
+* [Reference](#reference)
+* [Acknowledgement](#acknowledgement)
 
-[Perceptual Losses for Real-Time Style Transfer and Super-Resolution](https://arxiv.org/abs/1603.08155)<p>
-Network architecture detail: [LINK](https://web.eecs.umich.edu/~justincj/papers/eccv16/JohnsonECCV16Supplementary.pdf)
+---
 
+# Network structure overview
+
+**Network architecture detail: [LINK](#reference)**
 <p align=center> <img src ="https://media.springernature.com/original/springer-static/image/chp%3A10.1007%2F978-3-319-46475-6_43/MediaObjects/419974_1_En_43_Fig2_HTML.gif" width="420px" border="1"> </p>
 <p align=center><b>Network Overview</b></p>
 
 <p>
 
 
-## **Image Stylization Result**
+## Image Stylization Result
 ---
 <p align=center> <img src ="https://raw.githubusercontent.com/wilile26811249/Style_Transfer_PyTorch/main/images/input_images/sunset.jpg" width="420px" border="1"> </p>
 <p align=center><b>Original Image (Source: https://www.pixiv.net/artworks/75323963)</b></p>
@@ -148,3 +159,20 @@ Pretrained Weight: https://drive.google.com/drive/folders/1Iy-JGUA-KFjY0OgRmzhl2
 python neural_style/stylize_inference.py
 ```
 
+
+**Hint:**
+* images/input_images: The picture you want to transfer style, please put it in this folder
+
+---
+
+## Reference
+1. **J. Johnson, A. Alahi, and L. Fei-Fei. Perceptual losses for
+real-time style transfer and super-resolution. ECCV 2016**
+2. **J. Johnson, A. Alahi, and L. Fei-Fei. Perceptual Losses for Real-Time Style Transfer and Super-Resolution: Supplementary Material**
+
+---
+
+## Acknowledgement
+
+The code benefits from outstanding prior work and their implementations including:
+- [Perceptual losses for real-time style transfer and super-resolution](https://arxiv.org/pdf/1603.08155.pdf) by Johnson *et al. 2016* and its torch implementation [code](https://github.com/jcjohnson/neural-style) by Johnson.
