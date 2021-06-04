@@ -17,7 +17,7 @@ Network architecture detail: [LINK](https://web.eecs.umich.edu/~justincj/papers/
 ## **Image Stylization Result**
 ---
 <p align=center> <img src ="https://raw.githubusercontent.com/wilile26811249/Style_Transfer_PyTorch/main/images/input_images/sunset.jpg" width="420px" border="1"> </p>
-<p align=center><b>Original Image</b></p>
+<p align=center><b>Original Image (Source: https://www.pixiv.net/artworks/75323963)</b></p>
 
 <table style="width:100%, border:3px">
   <tr>
@@ -27,7 +27,7 @@ Network architecture detail: [LINK](https://web.eecs.umich.edu/~justincj/papers/
   <tr>
     <td width=50% align="center">
         <img src ="https://raw.githubusercontent.com/wilile26811249/Style_Transfer_PyTorch/main/images/style_images/candy.jpg"
-        height="210px"  border="1">
+        height="252px"  border="1">
     </td>
     <td>
         <img src ="https://raw.githubusercontent.com/wilile26811249/Style_Transfer_PyTorch/main/images/result_images/sunset_candy.jpg"   border="1">
@@ -36,7 +36,7 @@ Network architecture detail: [LINK](https://web.eecs.umich.edu/~justincj/papers/
   <tr>
     <td width=50% align="center">
         <img src ="https://raw.githubusercontent.com/wilile26811249/Style_Transfer_PyTorch/main/images/style_images/mosaic.jpg"
-        height="210px"  border="1">
+        height="252"  border="1">
     </td>
     <td>
         <img src ="https://raw.githubusercontent.com/wilile26811249/Style_Transfer_PyTorch/main/images/result_images/sunset_mosaic.jpg"   border="1">
@@ -45,7 +45,7 @@ Network architecture detail: [LINK](https://web.eecs.umich.edu/~justincj/papers/
   <tr>
     <td width=50% align="center">
         <img src ="https://raw.githubusercontent.com/wilile26811249/Style_Transfer_PyTorch/main/images/style_images/starry-night.jpg"
-        height="210px"  border="1">
+        height="252px"  border="1">
     </td>
     <td>
         <img src ="https://raw.githubusercontent.com/wilile26811249/Style_Transfer_PyTorch/main/images/result_images/sunset_starry_night.jpg"   border="1">
@@ -54,7 +54,7 @@ Network architecture detail: [LINK](https://web.eecs.umich.edu/~justincj/papers/
   <tr>
     <td width=50% align="center">
         <img src ="https://raw.githubusercontent.com/wilile26811249/Style_Transfer_PyTorch/main/images/style_images/great_wave.jpg"
-        height="210px"  border="1">
+        height="252px"  border="1">
     </td>
     <td>
         <img src ="https://raw.githubusercontent.com/wilile26811249/Style_Transfer_PyTorch/main/images/result_images/sunset_great_wave.jpg"   border="1">
@@ -63,7 +63,7 @@ Network architecture detail: [LINK](https://web.eecs.umich.edu/~justincj/papers/
   <tr>
     <td width=50% align="center">
         <img src ="https://raw.githubusercontent.com/wilile26811249/Style_Transfer_PyTorch/main/images/style_images/guernica.jpg"
-        height="210px"  border="1">
+        height="252px"  border="1">
     </td>
     <td>
         <img src ="https://raw.githubusercontent.com/wilile26811249/Style_Transfer_PyTorch/main/images/result_images/sunset_guernica.jpg"   border="1">
@@ -75,13 +75,20 @@ Network architecture detail: [LINK](https://web.eecs.umich.edu/~justincj/papers/
 
 # **Usage**
 
-## Training the Style-Transfer Network
+
+# Training the Style-Transfer Network
+
+0. Download the coco dataset
+``` bash
+bash download_dataset.sh
+```
+1. Train the Style Transfer model
 
 ```train.py```: Train the Transform Network that learn the style from the ```style_image``` and retain the semantic-information about the ```input_image```.
 ```bash
 python neural_style/train.py --content-dir ./images/content_images --style-img-path ./images/style_images/mosaic.jpg --epochs 1 --batch-size 4
 ```
-**Optionals**
+**Arguments (Optional)**
 ```
 usage: train_success.py [-h] [--epochs EPOCHS] [--lr LR]
                         [--batch-size BATCH_SIZE] [--img-size IMG_SIZE]
@@ -127,3 +134,17 @@ optional arguments:
                         Specific the final file name of the model weight
                         (default: style_transform)
 ```
+---
+
+# Neural Style Transfer
+
+0. Download the pretrained weight
+
+Pretrained Weight: https://drive.google.com/drive/folders/1Iy-JGUA-KFjY0OgRmzhl2HQmaaXrHYjh?usp=sharing
+
+1. Run the fast style transfer
+
+```bash
+python neural_style/stylize_inference.py
+```
+

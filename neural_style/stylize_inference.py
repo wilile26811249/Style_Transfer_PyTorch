@@ -5,7 +5,6 @@ import os
 import time
 
 import torch
-from torchvision import transforms
 
 import utils
 import transform_net
@@ -14,7 +13,7 @@ import transform_net
 # Check the style weight path
 style_filepath = {}
 style_name_list = []
-weight_path = glob.glob("../style_weight/*.pth")
+weight_path = glob.glob("./style_weight/*.pth")
 number_of_style = len(weight_path)
 for path in weight_path:
     weight_name = path.split("/")[-1]
@@ -22,10 +21,9 @@ for path in weight_path:
     style_name_list.append(style_name)
     style_filepath[style_name] = weight_name
 
-print(style_filepath)
 device = "cuda" if torch.cuda.is_available() else "cpu"
 inference_device = "GPU" if device == "cuda" else "CPU"
-print(f'Now you use "{inference_device}" to processing Style Transfer')
+print(f'Now you use "{inference_device}" to processing Fast Style Transfer')
 
 net = transform_net.TransformNet()
 with torch.no_grad():
@@ -62,4 +60,4 @@ with torch.no_grad():
             print("Transfer Time: {}".format(time.time() - starttime))
             utils.show(generated_image)
         else:
-            print(f"Please input (Input 1 ~ {number_of_style + 1}) to select style!")
+            print(f"Please input (Input 0 ~ {number_of_style}) to select style !")
